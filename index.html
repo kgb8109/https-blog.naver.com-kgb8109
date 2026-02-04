@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>창업중소기업 세액감면 대상 여부 검토</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .step {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .step.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .step-header {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .step-header h2 {
+            color: #333;
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+        
+        .step-header p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .radio-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .radio-item:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        
+        .radio-item input[type="radio"] {
+            width: auto;
+            margin-right: 8px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+        
+        .result {
+            display: none;
+        }
+        
+        .result.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        .result-box {
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .result-box.success {
+            background: #d4edda;
+            border: 2px solid #28a745;
+        }
+        
+        .result-box.warning {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+        }
+        
+        .result-box.error {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+        }
+        
+        .result-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .result-details {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .result-label {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .result-value {
+            color: #666;
+        }
+        
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .info-box strong {
+            color: #1976D2;
+        }
+        
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .warning-box strong {
+            color: #f57c00;
+        }
+        
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+        
+        .progress-step::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background: #e0e0e0;
+            z-index: 0;
+        }
+        
+        .progress-step:last-child::before {
+            display: none;
+        }
+        
+        .progress-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            color: #999;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 8px;
+        }
+        
+        .progress-step.completed .progress-circle {
+            background: #667eea;
+            color: white;
+        }
+        
+        .progress-step.active .progress-circle {
+            background: #764ba2;
+            color: white;
+            box-shadow: 0 0 0 4px rgba(118, 75, 162, 0.2);
+        }
+        
+        .progress-label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .mode-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .mode-card {
+            border: 3px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .mode-card:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        
+        .mode-card.selected {
+            border-color: #667eea;
+            background: #e7f0ff;
+        }
+        
+        .mode-card input[type="radio"] {
+            display: none;
+        }
+        
+        .mode-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .mode-card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .mode-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏢 창업중소기업 세액감면 대상 여부 검토</h1>
+            <p>조세특례제한법 제5조·제6조 기준 | 2026년 개정 세법 반영</p>
+        </div>
+<div class="content">
+            <!-- Step 0: 모드 선택 -->
+            <div class="step active" id="step0">
+                <div class="step-header">
+                    <h2>📋 판정 모드 선택</h2>
+                    <p>해당하는 유형을 선택해주세요</p>
+                </div>
+                
+                <div class="mode-selector">
+                    <label class="mode-card selected" onclick="selectMode('art5')">
+                        <input type="radio" name="mode" value="art5" checked>
+                        <div class="mode-icon">🏭</div>
+                        <h3>제5조: 일반 창업중소기업</h3>
+                        <p>제조업, 건설업, 음식점업, IT, 물류 등 일반적인 창업 기업</p>
+                    </label>
+                    
+                    <label class="mode-card" onclick="selectMode('art6')">
+                        <input type="radio" name="mode" value="art6">
+                        <div class="mode-icon">🚀</div>
+                        <h3>제6조: 벤처·특정 중소기업</h3>
+                        <p>벤처기업 인증, 기술혁신형 중소기업 등</p>
+                    </label>
+                </div>
+                
+                <div class="info-box">
+                    <strong>💡 선택 가이드:</strong><br>
+                    • 일반 창업: 대부분의 신규 창업 기업<br>
+                    • 벤처: 벤처기업 인증을 받았거나 받을 예정인 기업
+                </div>
+                
+                <div class="button-group">
+                    <button class="btn-primary" onclick="startAssessment()">판정 시작 →</button>
+                </div>
+            </div>
+            
+            <div class="progress-bar" id="progressBar" style="display: none;">
+                <div class="progress-step active" data-step="1">
+                    <div class="progress-circle">1</div>
+                    <div class="progress-label">기본정보</div>
+                </div>
+                <div class="progress-step" data-step="2">
+                    <div class="progress-circle">2</div>
+                    <div class="progress-label">창업적격</div>
+                </div>
+                <div class="progress-step" data-step="3">
+                    <div class="progress-circle">3</div>
+                    <div class="progress-label">업종확인</div>
+                </div>
+                <div class="progress-step" data-step="4">
+                    <div class="progress-circle">4</div>
+                    <div class="progress-label">지역정보</div>
+                </div>
+                <div class="progress-step" data-step="5">
+                    <div class="progress-circle">5</div>
+                    <div class="progress-label">결과</div>
+                </div>
+            </div>
+            
+            <!-- Step 1: 기본 정보 -->
+            <div class="step" id="step1">
+                <div class="step-header">
+                    <h2>📋 기본 정보 입력</h2>
+                    <p>사업자의 기본 정보를 입력해주세요</p>
+                </div>
+                
+                <div class="form-group">
+                    <label>사업자 유형</label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="businessType" value="individual" checked>
+                            <span>개인사업자</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="businessType" value="corporation">
+                            <span>법인</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>사업자등록일 (창업일) *</label>
+                    <input type="text" id="startDate" placeholder="예: 20251201" maxlength="8" oninput="validateDateInput(this)" required>
+                    <small style="color: #666;">YYYYMMDD 형식으로 입력 (예: 20251201)</small>
+                    <div class="info-box">
+                        <strong>중요:</strong> 2025년 12월 31일 이전 창업과 2026년 1월 1일 이후 창업은 감면율·한도가 크게 다릅니다 (조세특례제한법 제6조 부칙 기준).
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>대표자 생년월일 *</label>
+                    <input type="text" id="birthDate" placeholder="예: 19900101" maxlength="8" oninput="validateDateInput(this)" required>
+                    <small style="color: #666;">YYYYMMDD 형식으로 입력 (예: 19900101)</small>
+                </div>
+                
+                <div class="form-group">
+                    <label>군 복무 기간 (개월)</label>
+                    <input type="number" id="militaryMonths" min="0" max="72" value="0" placeholder="예: 18 (최대 72개월)">
+                    <div class="info-box">
+                        병역 기간은 최대 6년(72개월)까지 연령 계산 시 차감됩니다.
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>최초 소득 발생 예상 연도</label>
+                    <input type="number" id="incomeStartYear" min="2024" max="2030" placeholder="예: 2026">
+                    <div class="info-box">
+                        소득이 발생하는 과세연도부터 5년간 감면이 적용됩니다. 미입력 시 창업 연도로 계산됩니다.
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button class="btn-secondary" onclick="goToStep(0)">← 이전</button>
+                    <button class="btn-primary" onclick="nextStep(1)">다음 단계 →</button>
+                </div>
+            </div>
+            
+            <!-- Step 2: 창업 적격성 -->
+            <div class="step" id="step2">
+                <div class="step-header">
+                    <h2>✅ 창업 적격성 검증</h2>
+                    <p>다음 질문에 답변해주세요</p>
+                </div>
+                
+                <div class="form-group">
+                    <label>기존 사업을 인수하거나 승계했습니까?</label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="existingBusiness" value="no" checked>
+                            <span>아니오</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="existingBusiness" value="yes">
+                            <span>예</span>
+                        </label>
+                    </div>
+                    <div class="info-box">
+                        합병, 분할, 현물출자, 사업 양수 등을 통한 승계는 원칙적으로 창업으로 인정되지 않습니다.
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>폐업 후 동일 업종(세분류)으로 재창업했습니까?</label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="sameIndustry" value="no" checked>
+                            <span>아니오</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="sameIndustry" value="yes">
+                            <span>예</span>
+                        </label>
+                    </div>
+                    <div class="info-box">
+                        한국표준산업분류표상 '세분류'가 다르면 재창업으로 인정됩니다.
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>기존 사업장 확장 또는 업종 추가입니까?</label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="expansion" value="no" checked>
+                            <span>아니오 (신규 창업)</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="expansion" value="yes">
+                            <span>예 (확장/추가)</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="warning-box">
+                    <strong>⚠️ 주의:</strong> 위 질문 중 하나라도 '예'인 경우, 추가 검토가 필요하거나 감면 대상에서 제외될 수 있습니다.
+                </div>
+                
+                <div class="button-group">
+                    <button class="btn-secondary" onclick="prevStep(2)">← 이전</button>
+                    <button class="btn-primary" onclick="nextStep(2)">다음 단계 →</button>
+                </div>
+            </div>
+<!-- Step 3: 업종 확인 -->
+            <div class="step" id="step3">
+                <div class="step-header">
+                    <h2>🏭 업종 확인</h2>
+                    <p>한국표준산업분류 기준으로 업종을 선택해주세요</p>
+                </div>
+                
+                <div class="form-group">
+                    <label>주요 업종 선택 *</label>
+                    <select id="industry" onchange="updateIndustryInfo()">
+                        <option value="">-- 업종 선택 --</option>
+                        <optgroup label="✅ 제5조 감면 대상 업종">
+                            <option value="C">C: 제조업</option>
+                            <option value="E37">E37: 하수, 폐기물 처리</option>
+                            <option value="F">F: 건설업</option>
+                            <option value="G47">G47: 통신판매업 (전자상거래)</option>
+                            <option value="I56">I56: 음식점업</option>
+                            <option value="J58">J58-J63: 정보통신업</option>
+                            <option value="H49">H49-H52: 물류산업</option>
+                            <option value="S96">S96: 이용·미용업</option>
+                            <option value="M71">M71: 엔지니어링</option>
+                            <option value="I55">I55: 관광숙박업</option>
+                            <option value="R91">R91: 도서관, 사적지 관리</option>
+                            <option value="Q87">Q87: 사회복지 서비스업</option>
+                            <option value="P85">P85: 직업기술 학원</option>
+                        </optgroup>
+                        <optgroup label="❌ 제5조 제외 업종">
+                            <option value="G46">G46: 도매업 (오프라인)</option>
+                            <option value="G47-OFFLINE">G47: 소매업 (오프라인)</option>
+                            <option value="M69">M69: 법률·회계 서비스업</option>
+                            <option value="P85-ACADEMY">P85: 일반 교습학원</option>
+                            <option value="I5630">I563: 비알코올 음료점업 (카페)</option>
+                            <option value="J6391">J6391: 뉴스제공업</option>
+                            <option value="K6619">K6619: 가상자산 매매·중개업</option>
+                        </optgroup>
+                        <optgroup label="✅ 제6조 추가 대상">
+                            <option value="VENTURE">벤처기업 인증 업종</option>
+                            <option value="TECH">기술혁신형 중소기업</option>
+                        </optgroup>
+                    </select>
+                    <div id="industryInfo" style="margin-top: 15px;"></div>
+                </div>
+                
+                <div class="info-box">
+                    <strong>💡 업종 코드 확인 방법:</strong><br>
+                    • 통계청 홈페이지 → 한국표준산업분류 조회<br>
+                    • 사업자등록증의 업종 코드 확인<br>
+                    • 국세청 홈택스에서 업종 코드 검색
+                </div>
+                
+                <div class="warning-box">
+                    <strong>⚠️ 특별 케이스:</strong><br>
+                    • 카페: 일반 음료점은 제외되나, '제과점업'으로 등록 시 제조업으로 인정 가능<br>
+                    • 학원: 입시학원 등은 제외, 직업기술 분야만 감면 대상
+                </div>
+                
+                <div class="button-group">
+                    <button class="btn-secondary" onclick="prevStep(3)">← 이전</button>
+                    <button class="btn-primary" onclick="nextStep(3)">다음 단계 →</button>
+                </div>
+            </div>
+            
+            <!-- Step 4: 지역 및 세부 정보 -->
+            <div class="step" id="step4">
+                <div class="step-header">
+                    <h2>📍 지역 및 세부 정보</h2>
+                    <p>사업장 위치와 매출 정보를 입력해주세요</p>
+                </div>
+                
+                <div class="form-group">
+                    <label>사업장 소재지 (본점 주소 기준) *</label>
+                    <select id="region">
+                        <option value="">-- 지역 선택 --</option>
+                        <optgroup label="수도권과밀억제권역 (Zone 1)">
+                            <option value="zone1-seoul">서울특별시</option>
+                            <option value="zone1-incheon">인천광역시 (중구, 동구, 남구, 연수구, 남동구, 부평구, 계양구, 서구)</option>
+                            <option value="zone1-gwacheon">경기도 과천시</option>
+                            <option value="zone1-seongnam">경기도 성남시</option>
+                            <option value="zone1-hanam">경기도 하남시</option>
+                            <option value="zone1-goyang">경기도 고양시</option>
+                            <option value="zone1-suwon">경기도 수원시</option>
+                            <option value="zone1-seongnam">경기도 구리시</option>
+                            <option value="zone1-namyangju">경기도 남양주시 (일부)</option>
+                            <option value="zone1-etc">경기도 기타 과밀억제권역</option>
+                        </optgroup>
+                        <optgroup label="수도권 과밀억제권역 외 수도권 [성장관리권역 등] (Zone 2) - 2026년 중요!">
+                            <option value="zone2-hwaseong">경기도 화성시</option>
+                            <option value="zone2-yongin">경기도 용인시</option>
+                            <option value="zone2-pyeongtaek">경기도 평택시</option>
+                            <option value="zone2-paju">경기도 파주시</option>
+                            <option value="zone2-gimpo">경기도 김포시</option>
+                            <option value="zone2-yangju">경기도 양주시</option>
+                            <option value="zone2-icheon">경기도 이천시</option>
+                            <option value="zone2-anseong">경기도 안성시</option>
+                            <option value="zone2-etc">경기도 기타 성장관리권역</option>
+                        </optgroup>
+                        <optgroup label="수도권 인구감소지역 (Zone 3)">
+                            <option value="zone3-yeoncheon">경기도 연천군</option>
+                            <option value="zone3-ongjin">인천광역시 옹진군</option>
+                        </optgroup>
+                        <optgroup label="비수도권 (Zone 3)">
+                            <option value="zone3-busan">부산광역시</option>
+                            <option value="zone3-daegu">대구광역시</option>
+                            <option value="zone3-daejeon">대전광역시</option>
+                            <option value="zone3-gwangju">광주광역시</option>
+                            <option value="zone3-ulsan">울산광역시</option>
+                            <option value="zone3-sejong">세종특별자치시</option>
+                            <option value="zone3-gangwon">강원특별자치도</option>
+                            <option value="zone3-chungbuk">충청북도</option>
+                            <option value="zone3-chungnam">충청남도</option>
+                            <option value="zone3-jeonbuk">전북특별자치도</option>
+                            <option value="zone3-jeonnam">전라남도</option>
+                            <option value="zone3-gyeongbuk">경상북도</option>
+                            <option value="zone3-gyeongnam">경상남도</option>
+                            <option value="zone3-jeju">제주특별자치도</option>
+                        </optgroup>
+                    </select>
+                    <div class="info-box" style="margin-top: 10px;">
+                        <strong>2026년 개정 핵심:</strong> 수도권 성장관리권역(화성, 용인, 평택 등)의 감면율이 조정되었습니다.<br>
+                        • 청년: 100% → 75%<br>
+                        • 일반: 50% → 25%<br>
+                        <small style="color: #666; display: block; margin-top: 8px;">
+                            ※ 조세특례제한법은 '수도권 과밀억제권역 외의 수도권'이라는 용어를 사용하며, 도시계획상 성장관리권역 대부분이 여기에 포함됩니다.
+                        </small>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>연간 예상 수입금액 (매출액, 원)</label>
+                    <input type="text" id="revenue" placeholder="예: 50,000,000" oninput="formatRevenue(this)">
+                    <div class="info-box">
+                        <strong>조세특례제한법 제6조 제6항 (소규모 창업중소기업 등 생계형 특례):</strong><br>
+                        연 수입금액 8천만원 이하인 일반 창업자는 청년 창업자와 동일한 감면율을 적용받습니다.<br>
+                        <small style="color: #1976D2; display: block; margin-top: 6px;">
+                            • 과밀억제권역 일반 창업자: 제1항 일반 감면 대상 아님. 단, 제6항 생계형 특례 해당 시 50% 감면<br>
+                            • 기타 지역: 생계형 특례 적용 시 청년과 동일한 감면율 (75%~100%)
+                        </small>
+                        <small style="color: #d35400; display: block; margin-top: 8px;">
+                            ⚠️ 생계형 특례의 구체적 요건(매출 범위, 업종, 사업형태, 다른 감면과의 중복제한 등)은 최신 조세특례제한법·시행령 및 기획재정부 해석을 반드시 확인하시기 바랍니다.
+                        </small>
+                    </div>
+                </div>
+                
+                <div class="form-group" id="ventureInfoGroup" style="display: none;">
+                    <label>벤처기업 확인일 (제6조 해당 시)</label>
+                    <input type="text" id="ventureDate" placeholder="예: 20251201" maxlength="8" oninput="validateDateInput(this)">
+                    <small style="color: #666;">YYYYMMDD 형식으로 입력 (예: 20251201)</small>
+                    <div class="info-box">
+                        벤처기업 확인을 받은 날부터 감면이 적용됩니다.
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button class="btn-secondary" onclick="prevStep(4)">← 이전</button>
+                    <button class="btn-primary" onclick="calculateResult()">결과 확인 →</button>
+                </div>
+            </div>
+<!-- Result -->
+            <div class="result" id="result">
+                <div id="resultContent"></div>
+                <div class="button-group">
+                    <button class="btn-secondary" onclick="location.reload()">🔄 다시 판정하기</button>
+                    <button class="btn-primary" onclick="window.print()">🖨️ 결과 인쇄</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        let selectedMode = 'art5';
+        
+        // 날짜 입력 유효성 검사 (숫자만 허용)
+        function validateDateInput(input) {
+            input.value = input.value.replace(/[^0-9]/g, '');
+        }
+        
+        // YYYYMMDD 문자열을 Date 객체로 변환
+        function parseDate(dateStr) {
+            if (!dateStr || dateStr.length !== 8) return null;
+            const year = parseInt(dateStr.substring(0, 4));
+            const month = parseInt(dateStr.substring(4, 6)) - 1;
+            const day = parseInt(dateStr.substring(6, 8));
+            const date = new Date(year, month, day);
+            // 유효한 날짜인지 확인
+            if (date.getFullYear() !== year || date.getMonth() !== month || date.getDate() !== day) {
+                return null;
+            }
+            return date;
+        }
+        
+        // 날짜 유효성 검사
+        function isValidDate(dateStr) {
+            return parseDate(dateStr) !== null;
+        }
+        
+        // 매출 금액 천단위 구분 표시
+        function formatRevenue(input) {
+            // 숫자만 추출
+            let value = input.value.replace(/[^0-9]/g, '');
+            // 천단위 구분 표시
+            if (value) {
+                value = parseInt(value).toLocaleString('ko-KR');
+            }
+            input.value = value;
+        }
+        
+        // 매출 금액에서 숫자만 추출
+        function getRevenueValue() {
+            const revenueInput = document.getElementById('revenue').value;
+            return parseInt(revenueInput.replace(/[^0-9]/g, '')) || 0;
+        }
+        
+        // Date 객체를 YYYY.MM.DD 형식으로 표시
+        function formatDateDisplay(date) {
+            if (!date) return '';
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}.${month}.${day}`;
+        }
+        
+        // 감면율 테이블 - 법령 기준
+        // 법 제6조 제6항 제2호: 매출 8,000만 원 이하 일반 창업자는 청년 창업자와 동일한 감면율 적용
+        const rateTableArt5 = {
+            periodA: { // 2025.12.31 이전
+                youth: {
+                    zone1: 50,  // 과밀억제권역
+                    zone2: 100, // 기타 수도권 (과밀 외)
+                    zone3: 100  // 비수도권
+                },
+                normal: {
+                    zone1: 0,   // 과밀억제권역 (생계형 제외)
+                    zone2: 50,  // 기타 수도권
+                    zone3: 50   // 비수도권
+                },
+                // 생계형 창업자 (매출 8천만 원 이하) - 청년과 동일
+                smallScale: {
+                    zone1: 50,  // 과밀억제권역
+                    zone2: 100, // 기타 수도권 (과밀 외)
+                    zone3: 100  // 비수도권
+                }
+            },
+            periodB: { // 2026.1.1 이후
+                youth: {
+                    zone1: 50,  // 과밀억제권역
+                    zone2: 75,  // 성장관리권역 ★개정
+                    zone3: 100  // 비수도권/인구감소
+                },
+                normal: {
+                    zone1: 0,   // 과밀억제권역 (생계형 제외)
+                    zone2: 25,  // 성장관리권역 ★개정
+                    zone3: 50   // 비수도권/인구감소
+                },
+                // 생계형 창업자 (매출 8천만 원 이하) - 청년과 동일
+                smallScale: {
+                    zone1: 50,  // 과밀억제권역
+                    zone2: 75,  // 성장관리권역 ★개정
+                    zone3: 100  // 비수도권/인구감소
+                }
+            }
+        };
+        
+        const rateTableArt6 = {
+            periodA: { // 2025.12.31 이전
+                zone1: 100,
+                zone2: 50,
+                zone3: 50
+            },
+            periodB: { // 2026.1.1 이후
+                zone1: 100,
+                zone2: 75,
+                zone3: 50,
+                zone4: 25
+            }
+        };
+        
+        // 제외 업종 리스트
+        const excludedIndustriesArt5 = [
+            'G46', 'G47-OFFLINE', 'M69', 'P85-ACADEMY', 
+            'I5630', 'J6391', 'K6619'
+        ];
+        
+        function selectMode(mode) {
+            selectedMode = mode;
+            document.querySelectorAll('.mode-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+        }
+        
+        function startAssessment() {
+            document.getElementById('step0').classList.remove('active');
+            document.getElementById('step1').classList.add('active');
+            document.getElementById('progressBar').style.display = 'flex';
+            currentStep = 1;
+            updateProgress(1);
+            
+            // 제6조 선택 시 벤처 정보 입력란 표시
+            if (selectedMode === 'art6') {
+                document.getElementById('ventureInfoGroup').style.display = 'block';
+            }
+        }
+        
+        function goToStep(step) {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            if (step === 0) {
+                document.getElementById('step0').classList.add('active');
+                document.getElementById('progressBar').style.display = 'none';
+            } else {
+                document.getElementById(`step${step}`).classList.add('active');
+            }
+            currentStep = step;
+            updateProgress(step);
+            window.scrollTo(0, 0);
+        }
+        
+        function updateProgress(step) {
+            if (step === 0) return;
+            document.querySelectorAll('.progress-step').forEach((el, index) => {
+                el.classList.remove('active', 'completed');
+                if (index + 1 < step) {
+                    el.classList.add('completed');
+                } else if (index + 1 === step) {
+                    el.classList.add('active');
+                }
+            });
+        }
+        
+        function nextStep(step) {
+            // Validation
+            if (step === 1) {
+                const startDate = document.getElementById('startDate').value;
+                const birthDate = document.getElementById('birthDate').value;
+                if (!startDate || !birthDate) {
+                    alert('필수 항목(*)을 모두 입력해주세요.');
+                    return;
+                }
+                
+                // 날짜 형식 검증
+                if (!isValidDate(startDate)) {
+                    alert('사업자등록일을 올바른 형식(YYYYMMDD)으로 입력해주세요.\n예: 20251201');
+                    return;
+                }
+                if (!isValidDate(birthDate)) {
+                    alert('생년월일을 올바른 형식(YYYYMMDD)으로 입력해주세요.\n예: 19900101');
+                    return;
+                }
+                
+                // 연령 체크
+                const age = calculateAge(parseDate(birthDate), parseDate(startDate));
+                const militaryMonths = parseInt(document.getElementById('militaryMonths').value) || 0;
+                const militaryYears = Math.min(Math.floor(militaryMonths / 12), 6);
+                const adjustedAge = age - militaryYears;
+                
+                if (adjustedAge < 15) {
+                    alert('창업 당시 만 15세 미만은 청년 창업 요건을 충족하지 않습니다.');
+                    return;
+                }
+            }
+            
+            if (step === 3) {
+                const industry = document.getElementById('industry').value;
+                if (!industry) {
+                    alert('업종을 선택해주세요.');
+                    return;
+                }
+                
+                // 제외 업종 체크
+                if (selectedMode === 'art5' && excludedIndustriesArt5.includes(industry)) {
+                    showResult(false, '제외 업종', '선택하신 업종은 제5조 창업중소기업 세액감면 대상이 아닙니다.', null);
+                    return;
+                }
+            }
+            
+            document.getElementById(`step${step}`).classList.remove('active');
+            document.getElementById(`step${step + 1}`).classList.add('active');
+            currentStep = step + 1;
+            updateProgress(currentStep);
+            window.scrollTo(0, 0);
+        }
+        
+        function prevStep(step) {
+            document.getElementById(`step${step}`).classList.remove('active');
+            document.getElementById(`step${step - 1}`).classList.add('active');
+            currentStep = step - 1;
+            updateProgress(currentStep);
+            window.scrollTo(0, 0);
+        }
+        
+        function updateIndustryInfo() {
+            const industry = document.getElementById('industry').value;
+            const infoDiv = document.getElementById('industryInfo');
+            
+            const industryInfo = {
+                'C': '✅ 제조업: 모든 지역에서 감면 대상입니다.',
+                'E37': '✅ 하수·폐기물 처리: 감면 대상입니다.',
+                'F': '✅ 건설업: 감면 대상이며, 고용증대 시 추가 감면 가능합니다.',
+                'G47': '✅ 통신판매업: 전자상거래(온라인)만 해당됩니다.',
+                'I56': '✅ 음식점업: 일반 음식점이 해당됩니다.',
+                'J58': '✅ 정보통신업: 성장 산업으로 우대됩니다.',
+                'H49': '✅ 물류산업: 운송, 보관, 화물취급 등이 포함됩니다.',
+                'S96': '✅ 이용·미용업: 감면 대상입니다.',
+                'M71': '✅ 엔지니어링: 감면 대상입니다.',
+                'I55': '✅ 관광숙박업: 감면 대상입니다.',
+                'G46': '❌ 도매업(오프라인): 제5조 감면 대상이 아닙니다.',
+                'G47-OFFLINE': '❌ 소매업(오프라인): 제5조 감면 대상이 아닙니다.',
+                'M69': '❌ 법률·회계: 변호사, 세무사 등 전문직은 제외됩니다.',
+                'P85-ACADEMY': '❌ 일반 교습학원: 입시학원 등은 제외됩니다. (직업기술 학원은 가능)',
+                'I5630': '❌ 카페(비알코올 음료점): 일반 카페는 제외됩니다. (제과점업 등록 시 가능)',
+                'J6391': '❌ 뉴스제공업: 감면 대상이 아닙니다.',
+                'K6619': '❌ 가상자산 매매·중개: 감면 대상이 아닙니다.',
+                'VENTURE': '✅ 벤처기업: 제6조 감면 대상입니다 (50%).',
+                'TECH': '✅ 기술혁신형: 제6조 감면 대상입니다.'
+            };
+            
+            if (industry && industryInfo[industry]) {
+                const isEligible = industryInfo[industry].startsWith('✅');
+                infoDiv.innerHTML = `<div class="${isEligible ? 'info-box' : 'warning-box'}">${industryInfo[industry]}</div>`;
+            } else {
+                infoDiv.innerHTML = '';
+            }
+        }
+        
+        function calculateAge(birthDate, startDate) {
+            const age = startDate.getFullYear() - birthDate.getFullYear();
+            const monthDiff = startDate.getMonth() - birthDate.getMonth();
+            const dayDiff = startDate.getDate() - birthDate.getDate();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+                return age - 1;
+            }
+            return age;
+        }
+        
+        function calculateResult() {
+            const region = document.getElementById('region').value;
+            if (!region) {
+                alert('사업장 소재지를 선택해주세요.');
+                return;
+            }
+            
+            // 데이터 수집
+            const data = {
+                mode: selectedMode,
+                businessType: document.querySelector('input[name="businessType"]:checked').value,
+                startDate: parseDate(document.getElementById('startDate').value),
+                birthDate: parseDate(document.getElementById('birthDate').value),
+                militaryMonths: parseInt(document.getElementById('militaryMonths').value) || 0,
+                existingBusiness: document.querySelector('input[name="existingBusiness"]:checked').value,
+                sameIndustry: document.querySelector('input[name="sameIndustry"]:checked').value,
+                expansion: document.querySelector('input[name="expansion"]:checked').value,
+                industry: document.getElementById('industry').value,
+                region: region,
+                revenue: getRevenueValue(),
+                incomeStartYear: parseInt(document.getElementById('incomeStartYear').value) || 0
+            };
+            
+            // 추가 검토 필요 플래그
+            let needsReview = false;
+            let reviewReasons = [];
+            
+            // 창업 적격성 보수적 체크
+            if (data.existingBusiness === 'yes') {
+                needsReview = true;
+                reviewReasons.push('기존 사업 인수/승계 여부');
+            }
+            if (data.sameIndustry === 'yes') {
+                needsReview = true;
+                reviewReasons.push('동일 업종 재창업 여부');
+            }
+            if (data.expansion === 'yes') {
+                needsReview = true;
+                reviewReasons.push('사업 확장/업종 추가 여부');
+            }
+            
+            // 청년 여부 계산 (15-34세)
+            const ageInYears = calculateAge(data.birthDate, data.startDate);
+            const militaryYears = Math.min(Math.floor(data.militaryMonths / 12), 6);
+            const adjustedAge = ageInYears - militaryYears;
+            const isYouth = (adjustedAge >= 15 && adjustedAge <= 34);
+            
+            // 기간 판정 (2025.12.31 기준)
+            const cutoffDate = new Date('2025-12-31');
+            const isPeriodA = data.startDate <= cutoffDate;
+            
+            // 생계형 창업 여부
+            const isSmallScale = data.revenue > 0 && data.revenue <= 80000000;
+            
+            // 지역 구분
+            let zoneType = 'zone3'; // 기본값: 비수도권
+            if (region.startsWith('zone1')) {
+                zoneType = 'zone1';
+            } else if (region.startsWith('zone2')) {
+                zoneType = 'zone2';
+            } else if (region.startsWith('zone3')) {
+                zoneType = 'zone3';
+            }
+            
+            // 감면율 계산
+            let rate = 0;
+            let rateReason = '';
+            
+            if (data.mode === 'art5') {
+                rate = calculateRateArt5(isPeriodA, isYouth, zoneType, isSmallScale);
+                rateReason = getRateReasonArt5(isPeriodA, isYouth, zoneType, isSmallScale);
+            } else {
+                rate = calculateRateArt6(isPeriodA, zoneType);
+                rateReason = getRateReasonArt6(isPeriodA, zoneType);
+            }
+            
+            // 소득 발생 연도 및 감면 기간
+            const incomeStartYear = data.incomeStartYear > 0 ? 
+                data.incomeStartYear : data.startDate.getFullYear();
+            let exemptionEndYear = incomeStartYear + 4;
+            
+            // 제6조의 경우 2027년 상한 적용
+            if (data.mode === 'art6') {
+                exemptionEndYear = Math.min(exemptionEndYear, 2027);
+            }
+            
+            // 결과 표시
+            showDetailedResult(rate > 0, rate, rateReason, data, isYouth, adjustedAge, 
+                isPeriodA, incomeStartYear, exemptionEndYear, needsReview, reviewReasons, zoneType);
+        }
+        
+        function calculateRateArt5(isPeriodA, isYouth, zoneType, isSmallScale) {
+            const period = isPeriodA ? 'periodA' : 'periodB';
+            
+            if (isYouth) {
+                // 청년 창업자
+                return rateTableArt5[period].youth[zoneType] || 0;
+            } else if (isSmallScale) {
+                // 생계형 창업자 (매출 8천만 원 이하) - 청년과 동일한 감면율 적용 (법 제6조 제6항)
+                return rateTableArt5[period].smallScale[zoneType] || 0;
+            } else {
+                // 일반 창업자
+                return rateTableArt5[period].normal[zoneType] || 0;
+            }
+        }
+        
+        function getRateReasonArt5(isPeriodA, isYouth, zoneType, isSmallScale) {
+            const period = isPeriodA ? '2025년 이전' : '2026년 이후';
+            let typeStr;
+            let additionalNote = '';
+            
+            if (isYouth) {
+                typeStr = '청년(제1항)';
+            } else if (isSmallScale) {
+                typeStr = '생계형(제6항, 8천만원 이하)';
+                if (zoneType === 'zone1') {
+                    additionalNote = ' ※제1항 일반감면 미적용, 제6항 특례 적용';
+                }
+            } else {
+                typeStr = '일반(제1항)';
+                if (zoneType === 'zone1') {
+                    additionalNote = ' ※과밀억제권역 일반은 감면 배제';
+                }
+            }
+            
+            const zoneStr = zoneType === 'zone1' ? '과밀억제권역' : 
+                (zoneType === 'zone2' ? '과밀억제권역 외 수도권' : '비수도권/인구감소');
+            
+            return `${period} 창업 / ${typeStr} / ${zoneStr}${additionalNote}`;
+        }
+        
+        function calculateRateArt6(isPeriodA, zoneType) {
+            const period = isPeriodA ? 'periodA' : 'periodB';
+            return rateTableArt6[period][zoneType] || 50;
+        }
+        
+        function getRateReasonArt6(isPeriodA, zoneType) {
+            const period = isPeriodA ? '2025년 이전' : '2026년 이후';
+            const zoneStr = zoneType === 'zone1' ? '1구역' : 
+                (zoneType === 'zone2' ? '2구역' : '3구역');
+            return `${period} / 벤처·특정중소기업 / ${zoneStr}`;
+        }
+function showDetailedResult(eligible, rate, rateReason, data, isYouth, adjustedAge, 
+            isPeriodA, incomeStartYear, exemptionEndYear, needsReview, reviewReasons, zoneType) {
+            
+            document.getElementById('step4').classList.remove('active');
+            document.getElementById('result').classList.add('active');
+            currentStep = 5;
+            updateProgress(5);
+            
+            const resultClass = eligible ? (needsReview ? 'warning' : 'success') : 'error';
+            const resultIcon = eligible ? (needsReview ? '⚠️' : '✅') : '❌';
+            const title = eligible ? 
+                (needsReview ? '추가 검토 필요 (조건부 감면 가능)' : '세액감면 대상입니다!') : 
+                '세액감면 대상이 아닙니다';
+            
+            const lawArticle = data.mode === 'art5' ? '조세특례제한법 제5조' : '조세특례제한법 제6조';
+            
+            let html = `
+                <div class="result-box ${resultClass}">
+                    <div class="result-title">${resultIcon} ${title}</div>
+                    <p style="font-size: 18px; margin-top: 10px;">
+                        ${eligible ? `<strong>감면율: ${rate}%</strong>` : '감면 혜택을 받을 수 없습니다.'}
+                    </p>
+                    <p style="font-size: 14px; margin-top: 5px; opacity: 0.8;">
+                        적용 법조문: ${lawArticle}
+                    </p>
+                </div>
+            `;
+            
+            if (needsReview) {
+                html += `
+                    <div class="warning-box">
+                        <strong>⚠️ 추가 검토 필요 사항:</strong><br>
+                        다음 사항에 대해 세무 전문가와 상담이 필요합니다:<br>
+                        ${reviewReasons.map(r => `• ${r}`).join('<br>')}
+                        <br><br>
+                        <strong>참고:</strong> 종전 사업과의 관계, 자산 승계 비율 등에 따라 창업 인정 여부가 달라질 수 있습니다.
+                    </div>
+                `;
+            }
+            
+            html += `
+                <div class="result-details">
+                    <h3 style="margin-bottom: 15px; color: #333;">📊 판정 상세 정보</h3>
+                    
+                    <div class="result-item">
+                        <span class="result-label">적용 법조문</span>
+                        <span class="result-value">${lawArticle}</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label">창업일 (사업자등록일)</span>
+                        <span class="result-value">${formatDateDisplay(data.startDate)} (${isPeriodA ? '2025년 이전' : '2026년 이후'})</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label">청년 창업 여부</span>
+                        <span class="result-value">${isYouth ? `예 (만 ${adjustedAge}세, 15-34세 범위)` : `아니오 (만 ${adjustedAge}세)`}</span>
+                    </div>
+                    
+                    ${data.militaryMonths > 0 ? `
+                    <div class="result-item">
+                        <span class="result-label">병역 기간 차감</span>
+                        <span class="result-value">${data.militaryMonths}개월 (최대 72개월)</span>
+                    </div>
+                    ` : ''}
+                    
+                    <div class="result-item">
+                        <span class="result-label">사업장 위치</span>
+                        <span class="result-value">${getRegionName(data.region, zoneType)}</span>
+                    </div>
+                    
+                    ${data.revenue > 0 ? `
+                    <div class="result-item">
+                        <span class="result-label">연간 수입금액</span>
+                        <span class="result-value">${data.revenue.toLocaleString()}원 ${data.revenue <= 80000000 ? '(제6조 제6항 생계형 특례 해당 가능 - 추가 요건 검토 필요)' : ''}</span>
+                    </div>
+                    ` : ''}
+                    
+                    ${eligible ? `
+                    <div class="result-item">
+                        <span class="result-label">감면율 산정 근거</span>
+                        <span class="result-value">${rateReason}</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label">소득 발생 시작 연도</span>
+                        <span class="result-value">${incomeStartYear}년</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label">감면 기간</span>
+                        <span class="result-value">${incomeStartYear}년 ~ ${exemptionEndYear}년 (5개 과세연도)</span>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            if (eligible) {
+                const minTaxApplies = rate < 100;
+                html += `
+                    <div class="info-box">
+                        <strong>💡 추가 혜택 및 유의사항:</strong><br>
+                        ${rate === 100 ? 
+                            '• <strong>최저한세 배제:</strong> 100% 감면으로 납부할 세금이 0원이 될 수 있습니다.' :
+                            '• <strong>최저한세 적용:</strong> 산출세액의 7%(중소기업 기준)는 최소 납부해야 합니다.'
+                        }<br>
+                        • <strong>고용증대 추가 감면:</strong> 업종별 최소 고용인원 충족 시 추가 감면 가능<br>
+                        ${data.mode === 'art5' ? 
+                            '• <strong>통합고용세액공제:</strong> 2025년 이후 창업자는 중복 불가 (유리한 것 선택)<br>' : ''
+                        }
+                        • <strong>각 과세연도 감면 한도:</strong> 5억원 (2024년 개정)<br>
+                        • <strong>신청 방법:</strong> 과세표준신고 시 세무서에 세액감면신청서 제출
+                    </div>
+                    
+                    <div class="warning-box">
+                        <strong>⚠️ 중요 주의사항:</strong><br>
+                        • 감면 기간 중 중소기업 요건을 충족하지 못하면 감면 중단<br>
+                        • 업종 변경 시 감면율이 변경되거나 중단될 수 있음<br>
+                        • 실제 감면액은 소득세/법인세 산출세액에 따라 달라짐<br>
+                        • 본 판정은 참고용이며, 최종 적용은 세무 전문가와 상담 필요
+                    </div>
+                `;
+            } else {
+                html += `
+                    <div class="warning-box">
+                        <strong>💡 대안 방안:</strong><br>
+                        • <strong>벤처기업 인증:</strong> 창업 후 3년 내 벤처기업 인증 시 50% 감면 가능 (제6조)<br>
+                        • <strong>에너지신기술중소기업:</strong> 해당 시 50% 감면 가능<br>
+                        • <strong>신성장서비스업:</strong> 특정 업종의 경우 추가 감면 혜택<br>
+                        • <strong>기타 조세특례:</strong> 연구개발비 세액공제, 고용증대 세액공제 등 검토
+                    </div>
+                `;
+            }
+            
+            // 법령 참고 정보
+            html += `
+                <div class="info-box" style="background: #f5f5f5; border-left-color: #666;">
+                    <strong>📖 법령 참고:</strong><br>
+                    • 조세특례제한법 ${data.mode === 'art5' ? '제5조' : '제6조'} (창업중소기업 등에 대한 세액감면)<br>
+                    • 조세특례제한법 시행령 ${data.mode === 'art5' ? '제5조' : '제6조'}<br>
+                    • 제6조 제6항: 소규모 창업중소기업 등 생계형 특례 (수입금액 8천만원 이하 시 청년과 동률 적용)<br>
+                    • 2026년 개정 세법 적용 (시행일: 2026.01.02)<br>
+                    • 본 판정 시스템 버전: 2026.02 (최신 법령 반영)<br>
+                    <small style="color: #d35400; display: block; margin-top: 8px;">
+                        ⚠️ 본 판정은 참고용이며, 생계형 특례(제6항) 등 세부 요건은 최신 조세특례제한법·시행령 및 기획재정부 유권해석을 반드시 확인하시기 바랍니다.
+                    </small>
+                </div>
+            `;
+            
+            document.getElementById('resultContent').innerHTML = html;
+            window.scrollTo(0, 0);
+        }
+        
+        function getRegionName(region, zoneType) {
+            const regionMap = {
+                'zone1-seoul': '서울특별시 (과밀억제권역)',
+                'zone1-incheon': '인천광역시 일부 (과밀억제권역)',
+                'zone1-gwacheon': '경기도 과천시 (과밀억제권역)',
+                'zone1-seongnam': '경기도 성남시 (과밀억제권역)',
+                'zone1-hanam': '경기도 하남시 (과밀억제권역)',
+                'zone1-goyang': '경기도 고양시 (과밀억제권역)',
+                'zone1-suwon': '경기도 수원시 (과밀억제권역)',
+                'zone2-hwaseong': '경기도 화성시 (과밀억제권역 외 수도권)',
+                'zone2-yongin': '경기도 용인시 (과밀억제권역 외 수도권)',
+                'zone2-pyeongtaek': '경기도 평택시 (과밀억제권역 외 수도권)',
+                'zone2-paju': '경기도 파주시 (과밀억제권역 외 수도권)',
+                'zone2-gimpo': '경기도 김포시 (과밀억제권역 외 수도권)',
+                'zone3-yeoncheon': '경기도 연천군 (인구감소지역)',
+                'zone3-ongjin': '인천 옹진군 (인구감소지역)',
+                'zone3-busan': '부산광역시 (비수도권)',
+                'zone3-daegu': '대구광역시 (비수도권)',
+                'zone3-sejong': '세종특별자치시 (비수도권)'
+            };
+            
+            return regionMap[region] || `${region} (${
+                zoneType === 'zone1' ? '과밀억제권역' : 
+                zoneType === 'zone2' ? '과밀억제권역 외 수도권' : '비수도권/인구감소'
+            })`;
+        }
+        
+        function showResult(eligible, title, message, data) {
+            document.getElementById('step3').classList.remove('active');
+            document.getElementById('result').classList.add('active');
+            currentStep = 5;
+            updateProgress(5);
+            
+            const resultClass = eligible ? 'success' : 'error';
+            const resultIcon = eligible ? '✅' : '❌';
+            
+            document.getElementById('resultContent').innerHTML = `
+                <div class="result-box ${resultClass}">
+                    <div class="result-title">${resultIcon} ${title}</div>
+                    <p>${message}</p>
+                </div>
+            `;
+            
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
